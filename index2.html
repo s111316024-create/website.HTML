@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💡 陳若瑄 Rosam Chen 的個人部落格</title>
+    
+    <style>
+        /* 基礎樣式 (從原文件內嵌樣式提取並優化) */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f7f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* 標頭 (Header) */
+        header {
+            background-color: #4682b4; /* 統一使用穩定的藍色 */
+            color: white;
+            padding: 15px 5%;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* 導覽列 (Navbar) 連結樣式 */
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+            padding: 5px 0;
+            display: inline-block;
+        }
+
+        nav a:hover {
+            color: #ffcc00;
+        }
+
+        /* 主內容區塊 (Main) */
+        main {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        /* 側邊欄 (Aside) */
+        aside {
+            width: 100%;
+            max-width: 300px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            margin-right: 20px;
+        }
+
+        /* 文章內容區塊 (Main Content) */
+        .content-area {
+            flex-grow: 1;
+            min-width: 60%;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        }
+        
+        /* 區塊標題樣式 (h2) */
+        .content-area h2 {
+            color: #4682b4; /* 統一顏色 */
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* 關於我 (About Me) 區塊佈局 */
+        .about-me-header {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        /* 大頭貼樣式 */
+        .portrait {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #4682b4;
+        }
+
+        /* 技能標記樣式 */
+        .content-area mark {
+            background-color: #dbe4f0; /* 統一顏色 */
+            padding: 3px 6px;
+            border-radius: 3px;
+        }
+
+        /* 表格樣式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table thead {
+            background-color: #4682b4;
+            color: white;
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        table tbody tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        /* 技能評級表格寬度調整 */
+        #section3 table {
+            width: 100%; 
+            max-width: 350px;
+        }
+
+        /* 專案作品集樣式 */
+        .project-grid {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .project-card {
+            margin: 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            width: 100%;
+            max-width: calc(50% - 10px); /* 桌面兩欄佈局 */
+            background-color: #f9f9f9;
+            box-sizing: border-box;
+            transition: box-shadow 0.3s;
+        }
+
+        .project-card:hover {
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* 頁尾 (Footer) */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 20px;
+        }
+
+        /* ================================================= */
+        /* 圖片輪播 (Slider) 專用 CSS 樣式 */
+        #image-slider {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .slide-item {
+            display: none;
+            position: relative;
+        }
+
+        .slide-item img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            vertical-align: middle;
+        }
+
+        .slide-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            font-size: 1.5em;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* 導航點樣式 */
+        .dot-container {
+            text-align: center;
+            padding: 10px 0;
+            background-color: white;
+        }
+        .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .active, .dot:hover {
+            background-color: #4682b4;
+        }
+
+        /* 淡入淡出動畫 */
+        .fade {
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+
+        @keyframes fade {
+            from {opacity: .4} 
+            to {opacity: 1}
+        }
+
+        /* ================================================= */
+        /* 響應式 YouTube 影片容器 CSS */
+        .video-responsive {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 比例 (9 / 16 * 100) */
+            height: 0;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .video-responsive iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* ================================================= */
+        /* RWD (響應式網頁設計) Media Queries */
+        @media (max-width: 768px) {
+            main {
+                flex-direction: column;
+            }
+
+            aside {
+                max-width: 100%;
+                margin-right: 0;
+            }
+            
+            .about-me-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            nav a {
+                margin: 5px 10px;
+            }
+            
+            .project-grid {
+                 /* 影片嵌入佔滿寬度，第二個 project-card 也佔滿 */
+                display: flex;
+                flex-direction: column; 
+            }
+            
+            .project-card {
+                max-width: 100%; 
+            }
+            
+            .slide-item img {
+                height: 250px;
+            }
+            .slide-caption {
+                font-size: 1.2em;
+                padding: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            header, main {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1 style="margin: 0; font-size: 2em;">💡 陳若瑄 Rosam Chen 的個人部落格</h1>
+        <nav style="margin-top: 10px;">
+            <a href="#" style="color: white; margin: 0 15px; text-decoration: none; font-weight: bold;">🏠 首頁</a>
+            <a href="#section1">👤 關於我</a>
+            <a href="#section4">💻 專案作品集</a>
+            <a href="#section7">🔗 其他連結</a>
+            <a href="#contact">📧 聯絡我</a>
+        </nav>
+    </header>
+    
+    <div id="image-slider">
+        
+        <div class="slide-item fade">
+            <img src="assets/slider/slide1.jpg" alt="Slider Image 1 - 程式碼">
+            <div class="slide-caption">歡迎來到 Rosam Chen 的個人網站</div>
+        </div>
+        
+        <div class="slide-item fade">
+            <img src="assets/slider/slide2.jpg" alt="Slider Image 2 - 專案">
+            <div class="slide-caption">探索我的核心技能與專案作品</div>
+        </div>
+        
+        <div class="slide-item fade">
+            <img src="assets/slider/slide3.jpg" alt="Slider Image 3 - 校園">
+            <div class="slide-caption">國立臺北教育大學 資訊科學系 大二生</div>
+        </div>
+
+        <div class="dot-container">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+    </div>
+    <main>
+        
+        <aside>
+            <blockquote style="margin: 0; padding-left: 15px; border-left: 3px solid #4682b4;">
+                <h3 style="color: #4682b4; margin-top: 0;">座右銘</h3>
+                <p style="font-style: italic;">「你若盛開，蝴蝶自來。」</p>
+            </blockquote>
+            <hr style="border: 0; height: 1px; background-color: #eee; margin: 15px 0;">
+            <h3 style="color: #4682b4; margin-bottom: 10px;" id="contact">📧 聯絡我</h3>
+            <p>
+                📧 Email: <a href="mailto:s111316024@stu.ntue.edu.tw" style="color: #4682b4;">s111316024@stu.ntue.edu.tw</a><br>
+                🔗 GitHub: <a href="https://github.com/s111316024-create" target="_blank" style="color: #4682b4;">github.com/s111316024-create</a>
+            </p>
+        </aside>
+
+        <div class="content-area">
+
+            <article id="section1">
+                <h2>👤 關於我</h2>
+                <section class="about-me-header">
+                    <img src="assets\images\my_portrait.jpg" alt="大頭貼" class="portrait">
+                    <div>
+                        <h2 style="margin: 0; font-size: 2.2em; border: none; padding: 0;">Rosam Chen（陳若瑄）</h2>
+                        <p style="font-size: 1.1em; color: #555;">
+                            <a href="https://www.ntue.edu.tw/" style="color: #4682b4; text-decoration: none;">國立臺北教育大學</a> 資訊科學系 大二生
+                        </p>
+                    </div>
+                </section>
+                <section style="margin-top: 20px;">
+                    <p>我是一位正在學習資訊領域相關知識的學生，熟悉的程式語言有<mark>Python</mark>、<mark>C++</mark>和<mark>Java</mark></p>
+                    <p>目前正在努力做好一位學生的責任，認真對待課業且專精於自己的專業並持續學習成長，短期的目標是能憑藉自己的努力上一所好的研究所。</p>
+                </section>
+            </article>
+
+            <article id="section2">
+                <h2>📚 教育背景</h2>
+                <section>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>期間</th>
+                                <th>學校與主修</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2024-至今</td>
+                                <td>國立臺北教育大學資訊科學系 (大二)</td>
+                            </tr>
+                            <tr>
+                                <td>2021-2024</td>
+                                <td>北一女中第三類組</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+            </article>
+
+            <article id="section3">
+                <h2>🛠️ 核心技能</h2>
+                <section>
+                    <table>
+                        <tr>
+                            <td>Python </td>
+                            <td>⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td>Java</td>
+                            <td>⭐⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td>C++ (演算法)</td>
+                            <td>⭐⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td>HTML/CSS</td>
+                            <td>⭐</td>
+                        </tr>
+                    </table>
+                </section>
+            </article>
+
+            <article id="section4">
+                <h2>💻 專案作品集</h2>
+                <div class="project-grid"> 
+                    
+                    <div style="width: 100%;">
+                        <h3 style="margin-top: 0; color: #4682b4;">本學期作品範例：期中多媒體專案影片</h3>
+                        <div class="video-responsive">
+                            <iframe 
+                                src="https://youtu.be/x_UyCo6uRwE?si=K3itVQgoif3Iv4mI" 
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article id="section7">
+                <h2>🔗 其他連結與資訊</h2>
+                <article id="section7" style="margin-bottom: 40px;">
+            </article>
+
+            <h2 style="color: #6495ed;">📍 學校位置</h2>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.2784024338266!2d121.54206247541927!3d25.02462437782254!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442a908a8232611%3A0xeebfb2d71a5025c7!2z5ZyL56uL6Ie65YyX5pWZ6IKy5aSn5a24!5e0!3m2!1szh-TW!2stw!4v1731827435609!5m2!1szh-TW!2stw" width="100%" height="300" style="border: 1px solid #ccc; border-radius: 4px;" allowfullscreen="" loading="lazy"></iframe>        
+
+            </article>
+            
+            </div>
+    </main>
+    
+    <footer>
+        <p style="margin: 5px 0;">© 2025 Rosam Chen (陳若瑄). 版權所有。</p>
+        <p style="margin: 5px 0;">最後更新日期：<time datetime="2025-11-28">2025年11月28日</time></p>
+    </footer>
+
+    <script>
+        let slideIndex = 1;
+        let slideTimer;
+
+        // 首次載入時顯示第一張圖片
+        showSlides(slideIndex);
+
+        // 外部呼叫：點擊導航點時切換圖片
+        function currentSlide(n) {
+            clearTimeout(slideTimer); // 清除自動切換
+            showSlides(slideIndex = n);
+        }
+
+        // 主要顯示與自動播放邏輯
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("slide-item");
+            let dots = document.getElementsByClassName("dot");
+            
+            // 處理邊界條件 (回到第一張或最後一張)
+            if (n === undefined) {
+                slideIndex++;
+            } else {
+                slideIndex = n;
+            }
+
+            if (slideIndex > slides.length) {
+                slideIndex = 1;
+            }
+            if (slideIndex < 1) {
+                slideIndex = slides.length;
+            }
+            
+            // 隱藏所有圖片
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            
+            // 移除所有導航點的 active 類別
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            
+            // 顯示當前圖片並標記導航點
+            slides[slideIndex - 1].style.display = "block";  
+            dots[slideIndex - 1].className += " active";
+
+            // 設定 4 秒後自動切換到下一張
+            slideTimer = setTimeout(showSlides, 4000); 
+        }
+    </script>
+    </body>
+</html>
